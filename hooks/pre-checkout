@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+# Use a common git dir
+export BUILDKITE_REPOS_PATH="${BUILDKITE_REPOS_PATH:-$BUILDKITE_BUILD_PATH/../repos}"
+export BUILDKITE_REPO_SLUG="${BUILDKITE_REPO_SLUG:-$(echo "$BUILDKITE_REPO" | openssl md5)}"
+export BUILDKITE_REPO_PATH="$BUILDKITE_BUILD_PATH/../repos/$BUILDKITE_REPO_SLUG"
+
+# This variable is exported and respected by the calling bootstrap script
+export BUILDKITE_BUILD_CHECKOUT_PATH="$BUILDKITE_BUILD_PATH/$BUILDKITE_JOB_ID"
+
+# Make sure the directory doesn't already exist (i.e. job retry)
+if [[ -d "$BUILDKITE_BUILD_CHECKOUT_PATH" ]]; then
+  rm -rf "$BUILDKITE_BUILD_CHECKOUT_PATH"
+fi

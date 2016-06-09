@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+# XXX: If we have artifacts then we need to keep the checkout path until the
+# artifact upload has been run. This is out last opportunity to run a hook
+# which cleans up. It should always run at this point.
+rm -rf "$BUILDKITE_BUILD_CHECKOUT_PATH"
