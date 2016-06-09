@@ -45,13 +45,13 @@ if [[ -n "$BUILDKITE_COMMIT" &&
 # https://help.github.com/articles/checking-out-pull-requests-locally/#modifying-an-inactive-pull-request-locally
 elif [[ "$BUILDKITE_PULL_REQUEST" != "false" &&
         "$BUILDKITE_PROJECT_PROVIDER" == *"github"* ]]; then
-  git --git-dir="$BUILDKITE_REPO_PATH" fetch --verbose origin "refs/pull/${BUILDKITE_PULL_REQUEST}/head:buildkite/jobs/${BUILDKITE_JOB_ID}"
+  git --git-dir="$BUILDKITE_REPO_PATH" fetch --verbose origin "+refs/pull/${BUILDKITE_PULL_REQUEST}/head:buildkite/jobs/${BUILDKITE_JOB_ID}"
   git --git-dir="$BUILDKITE_REPO_PATH" worktree add --force --detach "$PWD" "buildkite/jobs/${BUILDKITE_JOB_ID}"
 
 # If the commit is "HEAD" then we can't do a commit-specific fetch and will
 # need to fetch the remote head and checkout the fetched head explicitly.
 elif [[ "$BUILDKITE_COMMIT" == "HEAD" ]]; then
-  git --git-dir="$BUILDKITE_REPO_PATH" fetch --verbose origin "${BUILDKITE_BRANCH}:buildkite/jobs/${BUILDKITE_JOB_ID}"
+  git --git-dir="$BUILDKITE_REPO_PATH" fetch --verbose origin "+${BUILDKITE_BRANCH}:buildkite/jobs/${BUILDKITE_JOB_ID}"
   git --git-dir="$BUILDKITE_REPO_PATH" worktree add --force --detach "$PWD" "buildkite/jobs/${BUILDKITE_JOB_ID}"
 
 # Otherwise fetch and checkout the commit directly.
