@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -e -o pipefail
+
+# Build directories are ephemeral, remove it when the job is finished.
+rm -rf "$BUILDKITE_BUILD_CHECKOUT_PATH"
