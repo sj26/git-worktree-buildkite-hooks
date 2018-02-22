@@ -4,7 +4,7 @@ set -e -o pipefail
 
 # Use a common git dir
 export BUILDKITE_REPOS_PATH="${BUILDKITE_REPOS_PATH:-$BUILDKITE_BUILD_PATH/../repos}"
-export BUILDKITE_REPO_SLUG="${BUILDKITE_REPO_SLUG:-$(echo "$BUILDKITE_REPO" | openssl md5)}"
+export BUILDKITE_REPO_SLUG="${BUILDKITE_REPO_SLUG:-$(echo "$BUILDKITE_REPO" | openssl md5 | sed 's/^.*= //')}"
 export BUILDKITE_REPO_PATH="$BUILDKITE_BUILD_PATH/../repos/$BUILDKITE_REPO_SLUG"
 
 # This variable is exported and respected by the calling bootstrap script
