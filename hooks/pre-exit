@@ -2,5 +2,5 @@
 
 set -e -o pipefail
 
-# Build directories are ephemeral, remove it when the job is finished.
-rm -rf "$BUILDKITE_BUILD_CHECKOUT_PATH"
+# Remove both the worktree checkout and the corresponding directory from .git/worktrees in the shared git dir
+git -C "$BUILDKITE_BUILD_CHECKOUT_PATH" worktree remove .
